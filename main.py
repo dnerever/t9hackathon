@@ -176,9 +176,15 @@ class Game():
             return hand
 
     # def double():
-        
 
     # def surrender():
+
+    def dealerPlay(self):
+        dealerValue = self.handValue(self.dealerHand)
+        while(dealerValue < 17):
+            self.hit(self.dealerHand)
+
+        return True # True done
 
 
 # g1 = Game(2)
