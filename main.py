@@ -25,18 +25,31 @@ class Value(Enum):
 
 deck = []
 
-for i in range(4):
+for i in range(4):      #need make this dynamic to allow multiple decks to be used
     for j in range(13):
-        deck.append((Suit(i).name,Value(j+1).name))
+        deck.append((Value(j+1).name, Suit(i).name))
 
 print(deck)
 
-def shuffle(deck):
+def shuffle():
     random.shuffle(deck)
 
-def deal(deck):
-    return deck.pop()
+def deal():
+    return deck.pop(0)
+
+def dealRound(numOfHands):
+    hands = [[] for i in range(numOfHands)]
+    for i in range(numOfHands):
+        hands[i].append(deal())
+    for i2 in range(numOfHands):
+        hands[i2].append(deal())
+    return hands
+
 
 # shuffle(deck)
 # print(deck)
-print("Dealt card: ", deal(deck))
+print("Dealt card: ", deal())
+
+print("--------------------")
+hands = dealRound(2)
+print(hands)
