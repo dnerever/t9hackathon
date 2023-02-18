@@ -45,6 +45,6 @@ def dealRound(numOfHands):
 print("--------------------")
 print("Dealt card: ", deal())
 print("--------------------")
-round1 = dealRound(2)
+round1 = dealRound(5)
 print("Round dealt", round1)
 
