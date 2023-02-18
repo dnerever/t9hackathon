@@ -151,7 +151,7 @@ class CardGame:
         # # Draw the Ace of Clubs in its current position
         # self.deck_of_cards.cards[0].blitme()
 
-
+        self.deck.deck[103].blitme()
 
         # # Draw a row of clubs
         # for index, card in enumerate(self.deck_of_cards.cards[0:13]):
