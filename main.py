@@ -23,10 +23,18 @@ class Value(Enum):
     QUEEN = 12
     KING = 13
 
+class Card():
+    def __init__(self, value, suit):
+        self.value = value
+        self.suit = suit
+
 deck = []
+deckOfCards = []
 for i in range(4):      #need make this dynamic to allow multiple decks to be used
     for j in range(13):
         deck.append((Value(j+1).name, Suit(i).name))
+        tempCard = Card(Value(j+1).name, Suit(i).name)
+        deckOfCards.append(tempCard)
 
 def shuffle():
     random.shuffle(deck)
@@ -48,3 +56,15 @@ print("--------------------")
 round1 = dealRound(5)
 print("Round dealt", round1)
 
+
+
+# card1 = Card(Value(j+1).name, Suit(i).name)
+print("--------------------Here")
+# print(card1.suit, " OF ", card1.value)
+print("--------------------")
+
+for i in range(52):
+    print(deckOfCards[i].value, " OF ", deckOfCards[i].suit)
+
+
+# Card()
