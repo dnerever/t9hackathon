@@ -97,6 +97,8 @@ class Game():
             self.hands[i].append(self.deck.deal())
         for i2 in range(numOfHands):
             self.hands[i2].append(self.deck.deal())
+
+        self.reveal = False
         return self.hands
 
     def printHands(self):
@@ -183,8 +185,7 @@ class Game():
         dealerValue = self.handValue(self.dealerHand)
         while(dealerValue < 17):
             self.hit(self.dealerHand)
-
-        return True # True done
+        self.reveal = True
 
 
 # g1 = Game(2)
