@@ -30,13 +30,15 @@ class CardGame:
         self.button_y = 100
         self.button_height = 40
 
+        self.g = Game(2, self)
 
-
-        self.deck = Deck(2,self)
 
 
     def run_game(self):
         # Start the game loop
+        self.g = Game(2, self)
+        self.g.deck.shuffle()
+        self.g.dealRound(2)
 
         while True:
             self._check_events()
@@ -151,7 +153,7 @@ class CardGame:
         # # Draw the Ace of Clubs in its current position
         # self.deck_of_cards.cards[0].blitme()
 
-        self.deck.deck[103].blitme()
+        self.g.deck.deck[0].blitme()
 
         # # Draw a row of clubs
         # for index, card in enumerate(self.deck_of_cards.cards[0:13]):

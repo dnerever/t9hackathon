@@ -87,8 +87,8 @@ class Deck():
         random.shuffle(self.deck)
 
 class Game():
-    def __init__(self, numOfDecks):
-        self.deck = Deck(numOfDecks, self)
+    def __init__(self, numOfDecks, card_game):
+        self.deck = Deck(numOfDecks, card_game)
 
     def dealRound(self, numOfHands):
         self.hands = [[] for i in range(numOfHands)]
