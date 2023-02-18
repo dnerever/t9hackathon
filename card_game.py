@@ -55,6 +55,10 @@ class CardGame:
                 if event.key == pygame.K_q:
                     print("Quitting")
                     sys.exit()
+                if event.key == pygame.K_s:
+                    print("Standing")
+                    self.g.stand()
+                    self.g.dealerPlay()
             #If mouse is pressed
             self.mouse = pygame.mouse.get_pos()
             if event.type == pygame.MOUSEBUTTONDOWN:
