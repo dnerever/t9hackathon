@@ -34,7 +34,7 @@ class Card():
     def getSuit(self):
         return self.suit.value
 
-    def printCard(self):
+    def printCard(self):                        #error also prints "None" following expected output
         print(self.value.name, " OF ", self.suit.name)
         print("--------------------")
 
@@ -45,21 +45,11 @@ class Deck():
             for j in range(13):
                 self.deck.append(Card(Value(j+1), Suit(i)))
 
+    def deal(self):
+        return self.deck.pop(0)
 
-
-# deck = []
-# deckOfCards = []
-# for i in range(4):      #need make this dynamic to allow multiple decks to be used
-#     for j in range(13):
-#         deck.append((Value(j+1).name, Suit(i).name))
-#         tempCard = Card(Value(j+1), Suit(i))
-#         deckOfCards.append(tempCard)
-
-# def shuffle():
-#     random.shuffle(deck)
-
-# def deal():
-#     return deck.pop(0)
+    def shuffle(self):
+        random.shuffle(self.deck)
 
 # def dealRound(numOfHands):
 #     hands = [[] for i in range(numOfHands)]
@@ -69,24 +59,9 @@ class Deck():
 #         hands[i2].append(deal())
 #     return hands
 
-# print("--------------------")
-# print("Dealt card: ", deal())
-# print("--------------------")
-# round1 = dealRound(5)
-# print("Round dealt", round1)
-
-
-
-# card1 = Card(Value(j+1).name, Suit(i).name)
-print("--------------------Here")
-# print(card1.suit, " OF ", card1.value)
-print("--------------------")
-
-# for i in range(52):
-#     print(deckOfCards[i].value.name, " OF ", deckOfCards[i].suit.name)
-#     print(deckOfCards[i].getValue)
-
 d1 = Deck(1)
 
+d1.shuffle()
+
 for i in range(52):
-    d1.deck[i].printCard()
+    print(d1.deal().printCard())
