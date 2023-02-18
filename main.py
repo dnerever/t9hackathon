@@ -70,14 +70,47 @@ class Game():
             for j in range(len(self.hands[i])):
                 self.hands[i][j].printCard()
 
+    def handValue(self, hand):
+        upperVal = 0
+        lowerVal = 0
+        for i in range(len(self.hands[hand])):
+            cardValue = self.hands[hand][i].getValue()
+            if 2 < cardValue and cardValue <= 10:
+                upperVal += cardValue
+                lowerVal += cardValue
+            elif cardValue == 1:
+                upperVal += 11
+                lowerVal += 1
+            else:
+                upperVal += 10
+                lowerVal += 10
+
+        if(upperVal != lowerVal):
+            if(upperVal > 21):
+                return lowerVal
+            else:
+                return (upperVal, lowerVal)
+
+        return upperVal
+
+    def hit(self, hand):
+        self.hands[hand].append(self.deck.deal())
+
+    # def stand():
+
+    # def split():
+
+    # def double():
+
+    # def surrender():
+
 
 g1 = Game(2)
-# g1.deck.shuffle()
+g1.deck.shuffle()
 g1.dealRound(2)
 print(g1.printHands())
 print(len(g1.deck.deck))
 
-# for i in range(52):
-#     print(d1.deal().printCard())
-
-
+print(g1.handValue(1))
+g1.hit(1)
+print(g1.handValue(1))
