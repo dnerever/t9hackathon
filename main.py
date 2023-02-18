@@ -1,6 +1,7 @@
 import random
 import array
 from enum import Enum
+from spritesheet import SpriteSheet
 
 class Suit(Enum):
     SPADES = 0
@@ -24,11 +25,21 @@ class Type(Enum):
     # KING = 13
 
 class Card():
-    def __init__(self, type, suit):
+    def __init__(self, type, suit, card_game):
         self.type = type
         self.suit = suit
-        # self.image
+        self.image = None
+        self.screen = card_game.screen
 
+        # Start each card in the top left corner
+        self.x, self.y = 0.0, 0.0;
+
+    def blitme(self):
+        # Draw the card at its current location
+        self.rect = self.image.get_rect()
+        self.rect.topleft = self.x, self.y
+        self.screen.blit(self.image, self.rect)
+        
     def getType(self):
         return self.type.value
     
@@ -43,12 +54,30 @@ class Card():
         # print("--------------------")
 
 class Deck():
-    def __init__(self, numOfDecks):
-        self.deck = []
+    def __init__(self, numOfDecks, card_game):
+        self.card_game = card_game
+        
+        self.deck = []  # equivalent self.cards = []
+
+        filename = 'playing_cards.bmp'
+        card_ss = SpriteSheet(filename)
+
+        # Loads all card images
+        card_images = card_ss.load_grid_images(5, 13, x_margin=0, x_padding=0, y_margin=0, y_padding=0)
         for i in range(numOfDecks):
             for j  in range(len(Suit)):
                 for k in range(len(Type)):
-                    self.deck.append(Card(Type(k+1), Suit(j)))
+                    card = Card(Card(Type(k+1), Suit(j)), self.card_game)
+                    # card.value = value
+                    # card.suit = suit
+                    card.image = card_images[card_num]
+                    self.cards.append(card)
+
+
+                    card_num += 1
+                    # self.deck.append(Card(Type(k+1), Suit(j)))
+
+        # self._load_cards()
 
     def deal(self):
         return self.deck.pop(0)
@@ -112,7 +141,7 @@ class Game():
             print("**********NO Blackjack or Bust**********")
             return False
 
-    def checkPlayer(self, handIndex):       # 1 = win, 0 = push/tie, -1 = loss 
+    def checkWin(self, handIndex):       # 1 = win, 0 = push/tie, -1 = loss 
         dealerValue = self.handValue(self.dealerHand)
         playerValue = self.handValue(handIndex)
         if(playerValue > dealerValue):
@@ -166,3 +195,5 @@ g1.split(0)
 g1.hit(0)
 
 g1.printHands()
+
+g1.checkWin(0)
