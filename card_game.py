@@ -1,7 +1,9 @@
 import sys
 import pygame
+from main import *
 from settings import Settings
-from deck_of_cards import Deck
+# from deck_of_cards import Deck
+# from deck_of_cards import Card
 
 
 class CardGame:
@@ -27,6 +29,9 @@ class CardGame:
         self.double_down_text = smallfont.render('Double Down', True, text_color)
         self.button_y = 100
         self.button_height = 40
+
+        g2 = Game(2)
+        g2.dealRound(2)
 
         self.deck_of_cards = Deck(self)
 
@@ -65,6 +70,7 @@ class CardGame:
                     if (self.settings.screen_height - self.button_y*5 <= self.mouse[1]
                     <= self.settings.screen_height - (self.button_y*5 - self.button_height)):
                         print("Hitting")
+
 
                 # On Stand
                 if (self.settings.screen_width - 200 <= self.mouse[0]
@@ -146,6 +152,8 @@ class CardGame:
         # # Draw the Ace of Clubs in its current position
         # self.deck_of_cards.cards[0].blitme()
 
+
+
         # # Draw a row of clubs
         # for index, card in enumerate(self.deck_of_cards.cards[0:13]):
         #     card.x = index * 50
@@ -203,6 +211,7 @@ class CardGame:
         else:
              pygame.draw.rect(self.screen,self.color_dark,[self.settings.screen_width - 200,self.settings.screen_height - (self.button_y * 2),140,40])
         self.screen.blit(self.split_text, (self.settings.screen_width - 150, self.settings.screen_height - (self.button_y * 2)))
+
 
         pygame.display.flip()
         pygame.display.update()
