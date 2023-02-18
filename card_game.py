@@ -219,6 +219,3 @@ class CardGame:
 if __name__ == '__main__':
     card_game = CardGame()
     card_game.run_game()
-
-g2 = Game(2)
-g2.dealRound(2)
