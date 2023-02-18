@@ -28,33 +28,52 @@ class Card():
         self.value = value
         self.suit = suit
 
-deck = []
-deckOfCards = []
-for i in range(4):      #need make this dynamic to allow multiple decks to be used
-    for j in range(13):
-        deck.append((Value(j+1).name, Suit(i).name))
-        tempCard = Card(Value(j+1).name, Suit(i).name)
-        deckOfCards.append(tempCard)
+    def getValue(self):
+        return self.value.value
+    
+    def getSuit(self):
+        return self.suit.value
 
-def shuffle():
-    random.shuffle(deck)
+    def printCard(self):
+        print(self.value.name, " OF ", self.suit.name)
+        print("--------------------")
 
-def deal():
-    return deck.pop(0)
+class Deck():
+    def __init__(self, numOfDecks):
+        self.deck = []
+        for i  in range(4):
+            for j in range(13):
+                self.deck.append(Card(Value(j+1), Suit(i)))
 
-def dealRound(numOfHands):
-    hands = [[] for i in range(numOfHands)]
-    for i in range(numOfHands):
-        hands[i].append(deal())
-    for i2 in range(numOfHands):
-        hands[i2].append(deal())
-    return hands
 
-print("--------------------")
-print("Dealt card: ", deal())
-print("--------------------")
-round1 = dealRound(5)
-print("Round dealt", round1)
+
+# deck = []
+# deckOfCards = []
+# for i in range(4):      #need make this dynamic to allow multiple decks to be used
+#     for j in range(13):
+#         deck.append((Value(j+1).name, Suit(i).name))
+#         tempCard = Card(Value(j+1), Suit(i))
+#         deckOfCards.append(tempCard)
+
+# def shuffle():
+#     random.shuffle(deck)
+
+# def deal():
+#     return deck.pop(0)
+
+# def dealRound(numOfHands):
+#     hands = [[] for i in range(numOfHands)]
+#     for i in range(numOfHands):
+#         hands[i].append(deal())
+#     for i2 in range(numOfHands):
+#         hands[i2].append(deal())
+#     return hands
+
+# print("--------------------")
+# print("Dealt card: ", deal())
+# print("--------------------")
+# round1 = dealRound(5)
+# print("Round dealt", round1)
 
 
 
@@ -63,8 +82,11 @@ print("--------------------Here")
 # print(card1.suit, " OF ", card1.value)
 print("--------------------")
 
+# for i in range(52):
+#     print(deckOfCards[i].value.name, " OF ", deckOfCards[i].suit.name)
+#     print(deckOfCards[i].getValue)
+
+d1 = Deck(1)
+
 for i in range(52):
-    print(deckOfCards[i].value, " OF ", deckOfCards[i].suit)
-
-
-# Card()
+    d1.deck[i].printCard()
