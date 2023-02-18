@@ -41,9 +41,10 @@ class Card():
 class Deck():
     def __init__(self, numOfDecks):
         self.deck = []
-        for i  in range(4):
-            for j in range(13):
-                self.deck.append(Card(Value(j+1), Suit(i)))
+        for i in range(numOfDecks):
+            for j  in range(4):
+                for k in range(13):
+                    self.deck.append(Card(Value(k+1), Suit(j)))
 
     def deal(self):
         return self.deck.pop(0)
@@ -65,16 +66,26 @@ class Deck():
             for j in range(len(self.hands[i])):
                 self.hands[i][j].printCard()
 
-# class Game():
-#     def __init__(self, numOfDecks):
+class Game():
+    def __init__(self, numOfDecks):
+        self.deck = Deck(numOfDecks)
 
+    
 
-d1 = Deck(1)
+d1 = Deck(2)
 
 d1.shuffle()
 d1.dealRound(2)
 print(d1.printHands())
+print(len(d1.deck))
+d1.dealRound(2)
+print(d1.printHands())
+print(len(d1.deck))
 
+g1 = Game(2)
+g1.deck.dealRound(2)
+print(g1.deck.printHands())
+print(len(g1.deck.deck))
 
 # for i in range(52):
 #     print(d1.deal().printCard())
