@@ -2,6 +2,7 @@ import sys
 import pygame
 from main import *
 from settings import Settings
+import time
 # from deck_of_cards import Deck
 # from deck_of_cards import Card
 
@@ -162,8 +163,8 @@ class CardGame:
         else:
             for index, card in enumerate(self.g.hands[1]):
                 card.x = index * 50
-
                 card.blitme()
+                # time.sleep(0.5)
 
         for index, card in enumerate(self.g.hands[0]):
             card.x = index * 50
