@@ -112,7 +112,18 @@ class Game():
             print("**********NO Blackjack or Bust**********")
             return False
 
-    # def check
+    def checkPlayer(self, handIndex):       # 1 = win, 0 = push/tie, -1 = loss 
+        dealerValue = self.handValue(self.dealerHand)
+        playerValue = self.handValue(handIndex)
+        if(playerValue > dealerValue):
+            print("WIN")
+            return 1
+        elif(playerValue == dealerValue):
+            print("PUSH")
+            return 0
+        else:
+            print("LOSS")
+            return -1
 
     def hit(self, handIndex):
         self.hands[handIndex].append(self.deck.deal())
