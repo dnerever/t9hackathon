@@ -51,17 +51,32 @@ class Deck():
     def shuffle(self):
         random.shuffle(self.deck)
 
-# def dealRound(numOfHands):
-#     hands = [[] for i in range(numOfHands)]
-#     for i in range(numOfHands):
-#         hands[i].append(deal())
-#     for i2 in range(numOfHands):
-#         hands[i2].append(deal())
-#     return hands
+    def dealRound(self, numOfHands):
+        self.hands = [[] for i in range(numOfHands)]
+        for i in range(numOfHands):
+            self.hands[i].append(self.deal())
+        for i2 in range(numOfHands):
+            self.hands[i2].append(self.deal())
+        return self.hands
+
+    def printHands(self):
+        for i in range(len(self.hands)):
+            print("Hand #", i, ": ")
+            for j in range(len(self.hands[i])):
+                self.hands[i][j].printCard()
+
+# class Game():
+#     def __init__(self, numOfDecks):
+
 
 d1 = Deck(1)
 
 d1.shuffle()
+d1.dealRound(2)
+print(d1.printHands())
 
-for i in range(52):
-    print(d1.deal().printCard())
+
+# for i in range(52):
+#     print(d1.deal().printCard())
+
+
