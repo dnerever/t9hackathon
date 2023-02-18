@@ -8,43 +8,47 @@ class Suit(Enum):
     CLUBS = 2
     DIAMONDS = 3
 
-class Value(Enum):
+class Type(Enum):
     ACE = 1
     TWO = 2
-    THREE = 3
-    FOUR = 4
-    FIVE = 5
-    SIX = 6
-    SEVEN = 7
-    EIGHT = 8
-    NINE = 9
-    TEN = 10
-    JACK = 11
-    QUEEN = 12
-    KING = 13
+    # THREE = 3
+    # FOUR = 4
+    # FIVE = 5
+    # SIX = 6
+    # SEVEN = 7
+    # EIGHT = 8
+    # NINE = 9
+    # TEN = 10
+    # JACK = 11
+    # QUEEN = 12
+    # KING = 13
 
 class Card():
-    def __init__(self, value, suit):
-        self.value = value
+    def __init__(self, type, suit):
+        self.type = type
         self.suit = suit
+        # self.image
 
-    def getValue(self):
-        return self.value.value
+    def getType(self):
+        return self.type.value
     
     def getSuit(self):
         return self.suit.value
 
+    def compare(self, otherCard):
+        return ((self.getType() == otherCard.getType()))
+
     def printCard(self):                        #error also prints "None" following expected output
-        print(self.value.name, " OF ", self.suit.name)
-        print("--------------------")
+        print("[", self.type.name, " OF ", self.suit.name, end="], ")
+        # print("--------------------")
 
 class Deck():
     def __init__(self, numOfDecks):
         self.deck = []
         for i in range(numOfDecks):
-            for j  in range(4):
-                for k in range(13):
-                    self.deck.append(Card(Value(k+1), Suit(j)))
+            for j  in range(len(Suit)):
+                for k in range(len(Type)):
+                    self.deck.append(Card(Type(k+1), Suit(j)))
 
     def deal(self):
         return self.deck.pop(0)
@@ -58,6 +62,7 @@ class Game():
 
     def dealRound(self, numOfHands):
         self.hands = [[] for i in range(numOfHands)]
+        self.dealerHand = len(self.hands) - 1
         for i in range(numOfHands):
             self.hands[i].append(self.deck.deal())
         for i2 in range(numOfHands):
@@ -66,19 +71,22 @@ class Game():
 
     def printHands(self):
         for i in range(len(self.hands)):
-            print("Hand #", i, ": ")
-            for j in range(len(self.hands[i])):
+            if(i == self.dealerHand):
+                print("**Dealer Hand** ", end="")
+            print("Hand #(", i, "): ", self.handValue(i))
+            for j in range(len(self.hands[i])):  #len(self.hands[i])     not working for case of having a single card
                 self.hands[i][j].printCard()
+            print()
 
     def handValue(self, hand):
         upperVal = 0
         lowerVal = 0
         for i in range(len(self.hands[hand])):
-            cardValue = self.hands[hand][i].getValue()
-            if 2 < cardValue and cardValue <= 10:
-                upperVal += cardValue
-                lowerVal += cardValue
-            elif cardValue == 1:
+            cardType = self.hands[hand][i].getType()
+            if 2 < cardType and cardType <= 10:
+                upperVal += cardType
+                lowerVal += cardType
+            elif cardType == 1:
                 upperVal += 11
                 lowerVal += 1
             else:
@@ -93,24 +101,57 @@ class Game():
 
         return upperVal
 
-    def hit(self, hand):
-        self.hands[hand].append(self.deck.deal())
+    def BustOrBJ(self, handIndex):
+        if((len(self.hand[handIndex]) == 2) and (self.handValue(handIndex) == 21)):
+            print("**********Blackjack**********")
+            return True
+        elif((self.handValue(handIndex)) > 21):
+            print("**********Bust**********")
+            return True
+        else:
+            print("**********NO Blackjack or Bust**********")
+            return False
 
-    # def stand():
+    # def check
 
-    # def split():
+    def hit(self, handIndex):
+        self.hands[handIndex].append(self.deck.deal())
+
+    def stand(self):
+        return  # do nothing
+
+    def split(self, hand):  #need to add case to check split possibility
+        if(self.hands[hand][0].compare(self.hands[hand][1])):   #checks that the two cards are the same type
+            newHandIndex = len(self.hands) #index of the new 2nd hand
+            tempCard = [self.hands[hand].pop(0)]
+            self.hands.append(tempCard)
+            print("newHandIndex: ", newHandIndex)
+            self.hit(hand)
+            self.hit(newHandIndex)
+            print(self.printHands())
+            return newHandIndex
+        else:
+            print("---This hand cannot be split---")
+            return hand
 
     # def double():
+        
 
     # def surrender():
 
 
 g1 = Game(2)
+
+# print("comparison (false): ", g1.deck.deck[0].compare(g1.deck.deck[1]))
+# print("comparison (true): ", g1.deck.deck[0].compare(g1.deck.deck[13]))
+
+print(len(g1.deck.deck))
+
 g1.deck.shuffle()
 g1.dealRound(2)
 print(g1.printHands())
-print(len(g1.deck.deck))
 
-print(g1.handValue(1))
-g1.hit(1)
-print(g1.handValue(1))
+g1.split(0)
+g1.hit(0)
+
+g1.printHands()
