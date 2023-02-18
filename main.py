@@ -2,6 +2,7 @@ import random
 import array
 from enum import Enum
 from spritesheet import SpriteSheet
+# import pygame
 
 class Suit(Enum):
     SPADES = 0
@@ -12,17 +13,17 @@ class Suit(Enum):
 class Type(Enum):
     ACE = 1
     TWO = 2
-    # THREE = 3
-    # FOUR = 4
-    # FIVE = 5
-    # SIX = 6
-    # SEVEN = 7
-    # EIGHT = 8
-    # NINE = 9
-    # TEN = 10
-    # JACK = 11
-    # QUEEN = 12
-    # KING = 13
+    THREE = 3
+    FOUR = 4
+    FIVE = 5
+    SIX = 6
+    SEVEN = 7
+    EIGHT = 8
+    NINE = 9
+    TEN = 10
+    JACK = 11
+    QUEEN = 12
+    KING = 13
 
 class Card():
     def __init__(self, type, suit, card_game):
@@ -32,7 +33,7 @@ class Card():
         self.screen = card_game.screen
 
         # Start each card in the top left corner
-        self.x, self.y = 0.0, 0.0;
+        self.x, self.y = 0.0, 0.0
 
     def blitme(self):
         # Draw the card at its current location
@@ -58,24 +59,24 @@ class Deck():
         self.card_game = card_game
         
         self.deck = []  # equivalent self.cards = []
-
         filename = 'playing_cards.bmp'
         card_ss = SpriteSheet(filename)
-
         # Loads all card images
         card_images = card_ss.load_grid_images(5, 13, x_margin=0, x_padding=0, y_margin=0, y_padding=0)
         for i in range(numOfDecks):
+            card_num = 0
             for j  in range(len(Suit)):
                 for k in range(len(Type)):
-                    card = Card(Card(Type(k+1), Suit(j)), self.card_game)
+                    card = Card(Type(k+1), Suit(j), self.card_game)
                     # card.value = value
                     # card.suit = suit
                     card.image = card_images[card_num]
-                    self.cards.append(card)
+                    self.deck.append(card)
 
 
                     card_num += 1
                     # self.deck.append(Card(Type(k+1), Suit(j)))
+
 
         # self._load_cards()
 
@@ -180,20 +181,20 @@ class Game():
     # def surrender():
 
 
-g1 = Game(2)
+# g1 = Game(2)
 
-# print("comparison (false): ", g1.deck.deck[0].compare(g1.deck.deck[1]))
-# print("comparison (true): ", g1.deck.deck[0].compare(g1.deck.deck[13]))
+# # print("comparison (false): ", g1.deck.deck[0].compare(g1.deck.deck[1]))
+# # print("comparison (true): ", g1.deck.deck[0].compare(g1.deck.deck[13]))
 
-print(len(g1.deck.deck))
+# print(len(g1.deck.deck))
 
-g1.deck.shuffle()
-g1.dealRound(2)
-print(g1.printHands())
+# g1.deck.shuffle()
+# g1.dealRound(2)
+# print(g1.printHands())
 
-g1.split(0)
-g1.hit(0)
+# g1.split(0)
+# g1.hit(0)
 
-g1.printHands()
+# g1.printHands()
 
-g1.checkWin(0)
+# g1.checkWin(0)
