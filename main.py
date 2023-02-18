@@ -185,6 +185,7 @@ class Game():
         dealerValue = self.handValue(self.dealerHand)
         while(dealerValue < 17):
             self.hit(self.dealerHand)
+            print(self.printHands())
             # self.hands[self.dealerHand].append(tempCard)
         self.reveal = True
 
