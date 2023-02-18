@@ -81,6 +81,7 @@ class CardGame:
                     <= self.settings.screen_height - (self.button_y*4 - self.button_height)):
                         print("Standing")
                         self.g.stand()
+                        self.g.dealerPlay()
 
                 # On Double Down
                 if (self.settings.screen_width - 200 <= self.mouse[0]
@@ -88,7 +89,7 @@ class CardGame:
                     if (self.settings.screen_height - self.button_y*3 <= self.mouse[1]
                     <= self.settings.screen_height - (self.button_y*3 - self.button_height)):
                         print("Doubling Down")
-                        
+
 
                 # On Split
                 if (self.settings.screen_width - 200 <= self.mouse[0]
@@ -156,14 +157,19 @@ class CardGame:
         # # Draw the Ace of Clubs in its current position
         # self.deck_of_cards.cards[0].blitme()
         
+        if self.g.reveal == False:
+            self.g.hands[1][0].blitme()
+        else:
+            for index, card in enumerate(self.g.hands[1]):
+                card.x = index * 50
+
+                card.blitme()
+
         for index, card in enumerate(self.g.hands[0]):
             card.x = index * 50
+            card.y = 500
             card.blitme()
 
-        for index, card in enumerate(self.g.hands[1]):
-            card.x = index * 50
-            card.y = 500
-            self.g.hands[1][0].blitme()
             
         # self.g.hands[0][0].blitme()
         
