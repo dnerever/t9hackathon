@@ -30,10 +30,9 @@ class CardGame:
         self.button_y = 100
         self.button_height = 40
 
-        g2 = Game(2)
-        g2.dealRound(2)
 
-        self.deck_of_cards = Deck(self)
+
+        self.deck = Deck(2,self)
 
 
     def run_game(self):
@@ -220,3 +219,6 @@ class CardGame:
 if __name__ == '__main__':
     card_game = CardGame()
     card_game.run_game()
+
+g2 = Game(2)
+g2.dealRound(2)

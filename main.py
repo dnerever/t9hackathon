@@ -87,7 +87,7 @@ class Deck():
 
 class Game():
     def __init__(self, numOfDecks):
-        self.deck = Deck(numOfDecks)
+        self.deck = Deck(numOfDecks, self)
 
     def dealRound(self, numOfHands):
         self.hands = [[] for i in range(numOfHands)]
