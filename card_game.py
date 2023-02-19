@@ -30,6 +30,7 @@ class CardGame:
         self.double_down_text = smallfont.render('Double Down', True, text_color)
         self.button_y = 100
         self.button_height = 40
+        
 
         self.g = Game(2, self)
 
@@ -40,6 +41,7 @@ class CardGame:
         self.g = Game(2, self)
         self.g.deck.shuffle()
         self.g.dealRound(2)
+
 
         while True:
             self._check_events()
