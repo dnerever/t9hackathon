@@ -164,7 +164,8 @@ class CardGame:
 
         # # Draw the Ace of Clubs in its current position
         # self.deck_of_cards.cards[0].blitme()
-        xShift = 500
+        xShift = (self.settings.screen_width - self.g.deck.card_ss.x_sprite_size)/2
+        yShift = (self.settings.screen_height - self.g.deck.card_ss.y_sprite_size)/2
         if self.g.reveal == False:
             self.g.hands[1][0].x = xShift
             self.g.hands[1][0].y = 70

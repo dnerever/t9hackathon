@@ -60,9 +60,10 @@ class Deck():
         
         self.deck = []  # equivalent self.cards = []
         filename = 'playing_cards.bmp'
-        card_ss = SpriteSheet(filename)
+        self.card_ss = SpriteSheet(filename)
         # Loads all card images
-        card_images = card_ss.load_grid_images(5, 13, x_margin=0, x_padding=0, y_margin=0, y_padding=0)
+        self.card_images = self.card_ss.load_grid_images(5, 13, x_margin=0, x_padding=0, y_margin=0, y_padding=0)
+        # card_ss.x_sprite_size
         for i in range(numOfDecks):
             card_num = 0
             for j  in range(len(Suit)):
@@ -70,7 +71,7 @@ class Deck():
                     card = Card(Type(k+1), Suit(j), self.card_game)
                     # card.value = value
                     # card.suit = suit
-                    card.image = card_images[card_num]
+                    card.image = self.card_images[card_num]
                     self.deck.append(card)
 
 

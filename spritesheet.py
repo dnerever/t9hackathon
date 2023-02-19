@@ -5,6 +5,8 @@ class SpriteSheet:
 
     def __init__(self, filename):
         """Load the sheet."""
+        self.x_sprite_size = 0
+        self.y_sprite_size = 0
         try:
             self.sheet = pygame.image.load(filename).convert()
         except pygame.error as e:
@@ -50,9 +52,9 @@ class SpriteSheet:
         # To calculate the size of each sprite, subtract the two margins, 
         #   and the padding between each row, then divide by num_cols.
         # Same reasoning for y.
-        x_sprite_size = ( sheet_width - 2 * x_margin
+        self.x_sprite_size = ( sheet_width - 2 * x_margin
                 - (num_cols - 1) * x_padding ) / num_cols
-        y_sprite_size = ( sheet_height - 2 * y_margin
+        self.y_sprite_size = ( sheet_height - 2 * y_margin
                 - (num_rows - 1) * y_padding ) / num_rows
 
         sprite_rects = []
@@ -60,9 +62,9 @@ class SpriteSheet:
             for col_num in range(num_cols):
                 # Position of sprite rect is margin + one sprite size
                 #   and one padding size for each row. Same for y.
-                x = x_margin + col_num * (x_sprite_size + x_padding)
-                y = y_margin + row_num * (y_sprite_size + y_padding)
-                sprite_rect = (x, y, x_sprite_size, y_sprite_size)
+                x = x_margin + col_num * (self.x_sprite_size + x_padding)
+                y = y_margin + row_num * (self.y_sprite_size + y_padding)
+                sprite_rect = (x, y, self.x_sprite_size, self.y_sprite_size)
                 sprite_rects.append(sprite_rect)
 
         return self.images_at(sprite_rects)
