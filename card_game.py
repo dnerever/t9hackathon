@@ -89,7 +89,7 @@ class CardGame:
                         print("Standing")
                         self.g.stand()
                         self.g.dealerPlay()
-                        self.g.checkWin()       #add variable to check win
+                        self.g.checkWin(0)       #add variable to check win
 
                 # On Double Down
                 if (self.settings.screen_width - 200 <= self.mouse[0]

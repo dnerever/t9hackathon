@@ -129,9 +129,12 @@ class Game():
             if(upperVal > 21):
                 return lowerVal
             else:
-                return (upperVal, lowerVal)
-
-        return upperVal
+                return upperVal
+        else:
+            if(upperVal > 21):
+                return lowerVal
+            else:
+                return upperVal
 
     def BustOrBJ(self, handIndex):
         if((len(self.hand[handIndex]) == 2) and (self.handValue(handIndex) == 21)):
@@ -182,11 +185,11 @@ class Game():
     # def surrender():
 
     def dealerPlay(self):
-        dealerValue = min(self.handValue(self.dealerHand))
+        dealerValue = self.handValue(self.dealerHand)
         while(dealerValue < 17):
             self.hit(self.dealerHand)
             print(self.printHands())
-            dealerValue = min(self.handValue(self.dealerHand))
+            dealerValue = self.handValue(self.dealerHand)
             # self.hands[self.dealerHand].append(tempCard)
         self.reveal = True
 
