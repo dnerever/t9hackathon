@@ -137,24 +137,29 @@ class Game():
             else:
                 return upperVal
 
-    def BustOrBJ(self, handIndex):
-        if((len(self.hand[handIndex]) == 2) and (self.handValue(handIndex) == 21)):
+    def bustOrBJ(self, handIndex):      # 1 = BJ, 0 = neither, -1 = bust/loss
+        if((len(self.hands[handIndex]) == 2) and (self.handValue(handIndex) == 21)):
             print("**********Blackjack**********")
-            return True
+            return 1
         elif((self.handValue(handIndex)) > 21):
             print("**********Bust**********")
-            return True
+            return -1
         else:
             print("**********NO Blackjack or Bust**********")
-            return False
+            return 0
 
-    def checkWin(self, handIndex):       # 1 = win, 0 = push/tie, -1 = loss 
+    def checkWin(self, handIndex):       # 1 = win, 0 = push/tie, -1 = loss
         dealerValue = self.handValue(self.dealerHand)
         playerValue = self.handValue(handIndex)
+        if(self.bustOrBJ(handIndex)):
+            return -1
+        elif((dealerValue > 21 and (playerValue <= 21))):
+            return 1
+        
         if(playerValue > dealerValue):
             print("WIN")
             return 1
-        elif(playerValue == dealerValue):
+        elif((playerValue == dealerValue)):
             print("PUSH")
             return 0
         else:
@@ -193,6 +198,16 @@ class Game():
             dealerValue = self.handValue(self.dealerHand)
             # self.hands[self.dealerHand].append(tempCard)
         self.reveal = True
+
+    def clearHands(self):
+        for i in range(len(self.hands)):
+            self.hands[i].pop(0)
+            # if(i == self.dealerHand):
+                # print("**Dealer Hand** ", end="")
+            # print("Hand #(", i, "): ", self.handValue(i))
+            # for j in range(len(self.hands[i])):  #len(self.hands[i])     not working for case of having a single card
+            #     self.hands[i][j].pop(0)
+            # print()
 
 
 # g1 = Game(2)

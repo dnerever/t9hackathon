@@ -24,10 +24,10 @@ class CardGame:
         self.color_dark = (100, 100, 100)
         smallfont = pygame.font.SysFont('Corbel', 35)
         self.hit_text = smallfont.render('Hit', True, text_color)
-        self.quit_text = smallfont.render('Quit', True, text_color)
+        self.quit_text = smallfont.render('Continue', True, text_color)
         self.stand_text = smallfont.render('Stand', True, text_color)
         self.split_text = smallfont.render('Split', True, text_color)
-        self.double_down_text = smallfont.render('Double Down', True, text_color)
+        self.double_down_text = smallfont.render('Double', True, text_color)
         self.button_y = 100
         self.button_height = 40
         
@@ -175,7 +175,7 @@ class CardGame:
                 card.x = xShift + index * 50
                 card.y = 70
                 card.blitme()
-                # time.sleep(0.5)
+                time.sleep(0.1)
 
         for index, card in enumerate(self.g.hands[0]):
             card.x = xShift + index * 50
