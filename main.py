@@ -131,7 +131,7 @@ class Game():
             else:
                 return (upperVal, lowerVal)
 
-        return upperVal
+        return (upperVal, lowerVal)
 
     def BustOrBJ(self, handIndex):
         if((len(self.hand[handIndex]) == 2) and (self.handValue(handIndex) == 21)):
