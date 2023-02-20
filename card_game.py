@@ -3,8 +3,6 @@ import pygame
 from main import *
 from settings import Settings
 import time
-# from deck_of_cards import Deck
-# from deck_of_cards import Card
 
 
 class CardGame:
@@ -21,12 +19,11 @@ class CardGame:
         self.buttonXPos = self.screen_width - 200
         self.button_width = 60
         self.button_color = (255,255,255)
+        self.button_text_offset = 50
+        self.button_x_text_pos = self.buttonXPos + self.button_text_offset
 
         #[self.hit_hover, self.stand_hover, self.double_down_hover, self.split_hover, self.quit_hover]
         self.button_hover_list = [False, False, False, False, False]
-
-        self.button_text_width = self.screen_width - 150
-
 
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height)) 
         pygame.display.set_caption("Cards")
@@ -44,8 +41,6 @@ class CardGame:
         self.button_text_list = [self.hit_text, self.stand_text, self.double_down_text, self.split_text, self.quit_text]
         self.button_y_shift = 100
         self.button_height = 40
-
-        # self.g = Game(2, self)
 
     def run_game(self):
         # Start the game loop
@@ -80,22 +75,22 @@ class CardGame:
                 
                 if(mouse_X_Over_buttonX):
                     # On Hit
-                    if(self.screen_height - self.button_y_shift*5 <= self.mouseY <= self.screen_height - (self.button_y_shift*5 - self.button_height)):
+                    if(self.screen_height <= self.mouseY + self.button_y_shift*5 <= self.screen_height + self.button_height):
                         print("Hitting")
                         self.g.hit(0)
                     # On Stand
-                    elif(self.screen_height - self.button_y_shift*4 <= self.mouseY <= self.screen_height - (self.button_y_shift*4 - self.button_height)):
+                    elif(self.screen_height <= self.mouseY + self.button_y_shift*2 <= self.screen_height + self.button_height):
                         print("Standing")
                         self.g.stand()
                         self.g.dealerPlay()
                         self.g.checkWin(0)       #add variable to check win
                     # On Double Down
-                    elif(self.screen_height - self.button_y_shift*3 <= self.mouseY <= self.screen_height - (self.button_y_shift*3 - self.button_height)):
+                    elif(self.screen_height <= self.mouseY + self.button_y_shift*3 <= self.screen_height + self.button_height):
                         print("Doubling Down")
-                    elif(self.screen_height - self.button_y_shift*2 <= self.mouseY <= self.screen_height - (self.button_y_shift*2 - self.button_height)):
+                    elif(self.screen_height <= self.mouseY + self.button_y_shift*4 <= self.screen_height + self.button_height):
                         print("Splitting")
                     # On Quit
-                    elif(self.screen_height - self.button_y_shift <= self.mouseY <= self.screen_height - (self.button_y_shift - self.button_height)):
+                    elif(self.screen_height <= self.mouseY + self.button_y_shift <= self.screen_height + self.button_height):
                         print("Quitting")
                         sys.exit()
         
@@ -140,7 +135,7 @@ class CardGame:
                 pygame.draw.rect(self.screen,self.color_light,[self.buttonXPos, self.screen_height - (self.button_y_shift * (5-i)),140,40])
             else:
                 pygame.draw.rect(self.screen,self.color_dark,[self.buttonXPos, self.screen_height - (self.button_y_shift * (5-i)),140,40])
-            self.screen.blit(self.button_text_list[i], (self.button_text_width, self.screen_height - (self.button_y_shift * (5-i))))
+            self.screen.blit(self.button_text_list[i], (self.button_x_text_pos, self.screen_height - (self.button_y_shift * (5-i))))
 
         pygame.display.flip()
         pygame.display.update()
