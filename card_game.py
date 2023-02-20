@@ -4,10 +4,8 @@ from main import *
 from settings import Settings
 import time
 
-
+# Overall class to manage game assets and behavior
 class CardGame:
-    # Overall class to manage game assets and behavior
-
     def __init__(self):
         # Initialize the game
         pygame.init()
@@ -16,11 +14,23 @@ class CardGame:
         #Improving readability
         self.screen_width = self.settings.screen_width
         self.screen_height = self.settings.screen_height
-        self.buttonXPos = self.screen_width - 200
-        self.button_width = 60
+        self.button_x_start = self.screen_width - 200
+        self.button_width = 140
+        self.button_x_end = self.button_x_start + self.button_width
+        self.button_height = 40
+        self.button_y_shift = 100
+        self.mouse_x = -1
+        self.mouse_y = -1
         self.button_color = (255,255,255)
         self.button_text_offset = 50
-        self.button_x_text_pos = self.buttonXPos + self.button_text_offset
+        self.button_x_text_pos = self.button_x_start + self.button_text_offset
+
+        # set button's y start and ends
+        self.button_y_start = []
+        self.button_y_end = []
+        for i in range(5):
+            self.button_y_start.append(self.screen_height - self.button_y_shift*(5-i))
+            self.button_y_end.append(self.button_y_start[i] + self.button_height)
 
         #[self.hit_hover, self.stand_hover, self.double_down_hover, self.split_hover, self.quit_hover]
         self.button_hover_list = [False, False, False, False, False]
@@ -39,8 +49,6 @@ class CardGame:
         self.split_text = smallfont.render('Split', True, text_color)
         self.double_down_text = smallfont.render('Double', True, text_color)
         self.button_text_list = [self.hit_text, self.stand_text, self.double_down_text, self.split_text, self.quit_text]
-        self.button_y_shift = 100
-        self.button_height = 40
 
     def run_game(self):
         # Start the game loop
@@ -65,40 +73,38 @@ class CardGame:
                     print("Standing")
                     self.g.stand()
                     self.g.dealerPlay()
+
             #If mouse is pressed
             self.mouse = pygame.mouse.get_pos()
-            self.mouseX = self.mouse[0]
-            self.mouseY = self.mouse[1]
+            self._update_mouse_position()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                end_button_width = (self.screen_width - self.button_width)
-                mouse_X_Over_buttonX = (self.buttonXPos <= self.mouseX <= end_button_width)     #checks if mouse is on x position of buttons
                 
-                if(mouse_X_Over_buttonX):
+                if(self._mouse_x_overlap(self.button_x_start, self.button_x_end)):
                     # On Hit
-                    if(self.screen_height <= self.mouseY + self.button_y_shift*5 <= self.screen_height + self.button_height):
+                    if(self._mouse_y_overlap(self.button_y_start[0], self.button_y_end[0])):
                         print("Hitting")
                         self.g.hit(0)
                     # On Stand
-                    elif(self.screen_height <= self.mouseY + self.button_y_shift*2 <= self.screen_height + self.button_height):
+                    elif(self._mouse_y_overlap(self.button_y_start[1], self.button_y_end[1])):
                         print("Standing")
                         self.g.stand()
                         self.g.dealerPlay()
                         self.g.checkWin(0)       #add variable to check win
                     # On Double Down
-                    elif(self.screen_height <= self.mouseY + self.button_y_shift*3 <= self.screen_height + self.button_height):
+                    elif(self._mouse_y_overlap(self.button_y_start[2], self.button_y_end[2])):
                         print("Doubling Down")
-                    elif(self.screen_height <= self.mouseY + self.button_y_shift*4 <= self.screen_height + self.button_height):
+                    elif(self._mouse_y_overlap(self.button_y_start[3], self.button_y_end[3])):
                         print("Splitting")
                     # On Quit
-                    elif(self.screen_height <= self.mouseY + self.button_y_shift <= self.screen_height + self.button_height):
+                    elif(self._mouse_y_overlap(self.button_y_start[4], self.button_y_end[4])):
                         print("Quitting")
                         sys.exit()
         
         # Button interactions ------
         for i in range(len(self.button_hover_list)):
             self.button_hover_list[i] = False
-            if (self.buttonXPos <= self.mouseX <= self.screen_width - self.button_width):
-                if ((self.screen_height - self.button_y_shift * (5-i)) <= self.mouseY <= self.screen_height - (self.button_y_shift * (5-i) - self.button_height)):
+            if (self.button_x_start <= self.mouse_x <= self.button_x_end):
+                if ((self.screen_height - self.button_y_shift * (5-i)) <= self.mouse_y <= self.screen_height - (self.button_y_shift * (5-i) - self.button_height)):
                     self.button_hover_list[i] = True
             else:
                 self.button_hover_list[i] = False
@@ -132,14 +138,24 @@ class CardGame:
         #checks if mouse is over a button and changes color if true 
         for i in range(len(self.button_hover_list)):
             if self.button_hover_list[i] == True:
-                pygame.draw.rect(self.screen,self.color_light,[self.buttonXPos, self.screen_height - (self.button_y_shift * (5-i)),140,40])
+                pygame.draw.rect(self.screen,self.color_light,[self.button_x_start, self.button_y_start[i],self.button_width,self.button_height]) 
             else:
-                pygame.draw.rect(self.screen,self.color_dark,[self.buttonXPos, self.screen_height - (self.button_y_shift * (5-i)),140,40])
-            self.screen.blit(self.button_text_list[i], (self.button_x_text_pos, self.screen_height - (self.button_y_shift * (5-i))))
+                pygame.draw.rect(self.screen,self.color_dark,[self.button_x_start, self.button_y_start[i],self.button_width,self.button_height])
+            self.screen.blit(self.button_text_list[i], (self.button_x_text_pos, self.button_y_start[i]))
 
         pygame.display.flip()
         pygame.display.update()
 
+    def _update_mouse_position(self):
+        self.mouse_x = self.mouse[0]
+        self.mouse_y = self.mouse[1]
+
+    def _mouse_x_overlap(self, minPos, maxPos):
+        return (minPos <= self.mouse_x <= maxPos)
+    
+    def _mouse_y_overlap(self, minPos, maxPos):
+        return (minPos <= self.mouse_y <= maxPos)
+        
 if __name__ == '__main__':
     card_game = CardGame()
     card_game.run_game()
