@@ -1,2 +1,6 @@
 # temporary python files
 __pycache__/
+
+
+# github custom settings
+.vscode/
