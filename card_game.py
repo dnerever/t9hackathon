@@ -196,11 +196,8 @@ class CardGame:
             else:
                 button_color_list.append(self.color_dark)
 
-        for i in range(len(button_color_list)):  #len(button_color_list)
             pygame.draw.rect(self.screen,button_color_list[i],[self.buttonXPos, self.screen_height - (self.button_y_shift * (5-i)),140,40])
             self.screen.blit(button_text_list[i], (self.button_text_width, self.screen_height - (self.button_y_shift * (5-i))))
-        
-
 
         pygame.display.flip()
         pygame.display.update()
