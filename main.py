@@ -59,7 +59,7 @@ class Deck():
         self.card_game = card_game
         
         self.deck = []  # equivalent self.cards = []
-        filename = 'playing_cards.bmp'
+        filename = 'images/playing_cards.bmp'
         self.card_ss = SpriteSheet(filename)
         # Loads all card images
         self.card_images = self.card_ss.load_grid_images(5, 13, x_margin=0, x_padding=0, y_margin=0, y_padding=0)
