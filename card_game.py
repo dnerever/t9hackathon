@@ -77,9 +77,7 @@ class CardGame:
                     self.g.stand()
                     self.g.dealerPlay()
             elif event.type == pygame.VIDEORESIZE:
-                # print(window.get_size())
                 window = pygame.display.set_mode((self.display_x_dimension, self.display_x_dimension), pygame.RESIZABLE)    #error when resizing smaller it seems
-                print(window.get_size())
 
             #If mouse is pressed
             self.mouse = pygame.mouse.get_pos()
