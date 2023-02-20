@@ -63,7 +63,7 @@ class Deck():
         self.card_ss = SpriteSheet(filename)
         # Loads all card images
         self.card_images = self.card_ss.load_grid_images(5, 13, x_margin=0, x_padding=0, y_margin=0, y_padding=0)
-        # card_ss.x_sprite_size
+        self.card_back = self.card_images[54]
         for i in range(numOfDecks):
             card_num = 0
             for j  in range(len(Suit)):
@@ -73,13 +73,7 @@ class Deck():
                     # card.suit = suit
                     card.image = self.card_images[card_num]
                     self.deck.append(card)
-
-
                     card_num += 1
-                    # self.deck.append(Card(Type(k+1), Suit(j)))
-
-
-        # self._load_cards()
 
     def deal(self):
         return self.deck.pop(0)
@@ -90,8 +84,10 @@ class Deck():
 class Game():
     def __init__(self, numOfDecks, card_game):
         self.deck = Deck(numOfDecks, card_game)
+        self.hands = [[]]
 
     def dealRound(self, numOfHands):
+        self.clearHands()
         self.hands = [[] for i in range(numOfHands)]
         self.dealerHand = len(self.hands) - 1
         for i in range(numOfHands):
@@ -200,7 +196,8 @@ class Game():
         self.reveal = True
 
     def clearHands(self):
-        for i in range(len(self.hands)):
+        print("len(self.hands) = ", len(self.hands))
+        for i in range(len(self.hands) - 1):
             self.hands[i].pop(0)
             # if(i == self.dealerHand):
                 # print("**Dealer Hand** ", end="")

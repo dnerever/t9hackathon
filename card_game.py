@@ -98,7 +98,9 @@ class CardGame:
                     # On Quit
                     elif(self._mouse_y_overlap(self.button_y_start[4], self.button_y_end[4])):
                         print("Quitting")
-                        sys.exit()
+                        self.g.dealRound(2)
+                        time.sleep(.01)
+                        # sys.exit()
         
         # Button interactions ------
         for i in range(len(self.button_hover_list)):
@@ -118,6 +120,7 @@ class CardGame:
             self.g.hands[1][0].x = xShift
             self.g.hands[1][0].y = 70
             self.g.hands[1][0].blitme()
+            # self.g.deck.card_back.blitme()
         else:
             for index, card in enumerate(self.g.hands[1]):
                 card.x = xShift + index * 50
