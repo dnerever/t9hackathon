@@ -1,8 +1,8 @@
-import sys
 import pygame
+import sys
+import time
 from main import *
 from settings import Settings
-import time
 
 # Overall class to manage game assets and behavior
 class CardGame:
@@ -15,24 +15,26 @@ class CardGame:
         self.screen_width = self.settings.screen_width
         self.screen_height = self.settings.screen_height
         self.button_x_start = self.screen_width - 200
-        self.button_width = 140
+        self.button_width = 160
         self.button_x_end = self.button_x_start + self.button_width
         self.button_height = 40
         self.button_y_shift = 100
         self.mouse_x = -1
         self.mouse_y = -1
         self.button_color = (255,255,255)
-        self.button_text_offset = 50
-        self.button_x_text_pos = self.button_x_start + self.button_text_offset
+        self.button_text_offset = [60, 50, 40, 60, 30]      #hard coded button shifts   #future addition would be to measure the width of text to display and then find center of that text
+        
 
         # set button's y start and ends
         self.button_y_start = []
         self.button_y_end = []
+        self.button_x_text_pos = []
         for i in range(5):
             self.button_y_start.append(self.screen_height - self.button_y_shift*(5-i))
             self.button_y_end.append(self.button_y_start[i] + self.button_height)
+            self.button_x_text_pos.append(self.button_x_start + self.button_text_offset[i])
 
-        #[self.hit_hover, self.stand_hover, self.double_down_hover, self.split_hover, self.quit_hover]
+        #[self.hit_hover, self.stand_hover, self.double_down_hover, self.split_hover, self.continue_hover]
         self.button_hover_list = [False, False, False, False, False]
 
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height)) 
@@ -44,11 +46,11 @@ class CardGame:
         self.color_dark = (100, 100, 100)
         smallfont = pygame.font.SysFont('Corbel', 35)
         self.hit_text = smallfont.render('Hit', True, text_color)
-        self.quit_text = smallfont.render('Continue', True, text_color)
+        self.continue_text = smallfont.render('Continue', True, text_color)
         self.stand_text = smallfont.render('Stand', True, text_color)
         self.split_text = smallfont.render('Split', True, text_color)
         self.double_down_text = smallfont.render('Double', True, text_color)
-        self.button_text_list = [self.hit_text, self.stand_text, self.double_down_text, self.split_text, self.quit_text]
+        self.button_text_list = [self.hit_text, self.stand_text, self.double_down_text, self.split_text, self.continue_text]
 
     def run_game(self):
         # Start the game loop
@@ -95,9 +97,9 @@ class CardGame:
                         print("Doubling Down")
                     elif(self._mouse_y_overlap(self.button_y_start[3], self.button_y_end[3])):
                         print("Splitting")
-                    # On Quit
+                    # On Continue
                     elif(self._mouse_y_overlap(self.button_y_start[4], self.button_y_end[4])):
-                        print("Quitting")
+                        print("Continue")
                         self.g.dealRound(2)
                         time.sleep(.01)
                         # sys.exit()
@@ -144,7 +146,7 @@ class CardGame:
                 pygame.draw.rect(self.screen,self.color_light,[self.button_x_start, self.button_y_start[i],self.button_width,self.button_height]) 
             else:
                 pygame.draw.rect(self.screen,self.color_dark,[self.button_x_start, self.button_y_start[i],self.button_width,self.button_height])
-            self.screen.blit(self.button_text_list[i], (self.button_x_text_pos, self.button_y_start[i]))
+            self.screen.blit(self.button_text_list[i], (self.button_x_text_pos[i], self.button_y_start[i]))
 
         pygame.display.flip()
         pygame.display.update()

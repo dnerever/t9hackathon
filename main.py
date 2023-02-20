@@ -1,8 +1,6 @@
 import random
-import array
 from enum import Enum
 from spritesheet import SpriteSheet
-# import pygame
 
 class Suit(Enum):
     SPADES = 0
@@ -52,7 +50,6 @@ class Card():
 
     def printCard(self):                        #error also prints "None" following expected output
         print("[", self.type.name, " OF ", self.suit.name, end="], ")
-        # print("--------------------")
 
 class Deck():
     def __init__(self, numOfDecks, card_game):
@@ -100,12 +97,8 @@ class Game():
 
     def printHands(self):
         for i in range(len(self.hands)):
-            if(i == self.dealerHand):
-                print("**Dealer Hand** ", end="")
-            print("Hand #(", i, "): ", self.handValue(i))
             for j in range(len(self.hands[i])):  #len(self.hands[i])     not working for case of having a single card
                 self.hands[i][j].printCard()
-            print()
 
     def handValue(self, hand):
         upperVal = 0
@@ -173,10 +166,9 @@ class Game():
             newHandIndex = len(self.hands) #index of the new 2nd hand
             tempCard = [self.hands[hand].pop(0)]
             self.hands.append(tempCard)
-            print("newHandIndex: ", newHandIndex)
             self.hit(hand)
             self.hit(newHandIndex)
-            print(self.printHands())
+            # print(self.printHands())
             return newHandIndex
         else:
             print("---This hand cannot be split---")
@@ -190,37 +182,9 @@ class Game():
         dealerValue = self.handValue(self.dealerHand)
         while(dealerValue < 17):
             self.hit(self.dealerHand)
-            print(self.printHands())
             dealerValue = self.handValue(self.dealerHand)
-            # self.hands[self.dealerHand].append(tempCard)
         self.reveal = True
 
     def clearHands(self):
-        print("len(self.hands) = ", len(self.hands))
         for i in range(len(self.hands) - 1):
             self.hands[i].pop(0)
-            # if(i == self.dealerHand):
-                # print("**Dealer Hand** ", end="")
-            # print("Hand #(", i, "): ", self.handValue(i))
-            # for j in range(len(self.hands[i])):  #len(self.hands[i])     not working for case of having a single card
-            #     self.hands[i][j].pop(0)
-            # print()
-
-
-# g1 = Game(2)
-
-# # print("comparison (false): ", g1.deck.deck[0].compare(g1.deck.deck[1]))
-# # print("comparison (true): ", g1.deck.deck[0].compare(g1.deck.deck[13]))
-
-# print(len(g1.deck.deck))
-
-# g1.deck.shuffle()
-# g1.dealRound(2)
-# print(g1.printHands())
-
-# g1.split(0)
-# g1.hit(0)
-
-# g1.printHands()
-
-# g1.checkWin(0)
