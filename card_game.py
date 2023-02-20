@@ -36,8 +36,9 @@ class CardGame:
 
         #[self.hit_hover, self.stand_hover, self.double_down_hover, self.split_hover, self.continue_hover]
         self.button_hover_list = [False, False, False, False, False]
-
-        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height)) 
+        self.display_x_dimension = pygame.display.Info().current_w
+        self.display_y_dimension = pygame.display.Info().current_h
+        self.screen = pygame.display.set_mode((self.display_x_dimension, self.display_y_dimension), pygame.RESIZABLE) 
         pygame.display.set_caption("Cards")
 
         # Button coloring
@@ -75,6 +76,10 @@ class CardGame:
                     print("Standing")
                     self.g.stand()
                     self.g.dealerPlay()
+            elif event.type == pygame.VIDEORESIZE:
+                # print(window.get_size())
+                window = pygame.display.set_mode((self.display_x_dimension, self.display_x_dimension), pygame.RESIZABLE)    #error when resizing smaller it seems
+                print(window.get_size())
 
             #If mouse is pressed
             self.mouse = pygame.mouse.get_pos()
@@ -88,10 +93,11 @@ class CardGame:
                         self.g.hit(0)
                     # On Stand
                     elif(self._mouse_y_overlap(self.button_y_start[1], self.button_y_end[1])):
-                        print("Standing")
+                        # print("Standing")
                         self.g.stand()
                         self.g.dealerPlay()
-                        self.g.checkWin(0)       #add variable to check win
+                        result = self.g.checkWin(0)       #add variable to check win
+                        print(f"Hand result: {result}")
                     # On Double Down
                     elif(self._mouse_y_overlap(self.button_y_start[2], self.button_y_end[2])):
                         print("Doubling Down")
