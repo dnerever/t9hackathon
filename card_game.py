@@ -12,17 +12,18 @@ class CardGame:
         self.settings = Settings()
 
         #Improving readability
-        self.screen_width = self.settings.screen_width
-        self.screen_height = self.settings.screen_height
-        self.button_x_start = self.screen_width - 200
-        self.button_width = 160
+        self.screen_width = pygame.display.Info().current_w
+        self.screen_height = pygame.display.Info().current_h
+        self.button_x_start = self.screen_width * 4/5
+        self.button_width = self.screen_width /10
         self.button_x_end = self.button_x_start + self.button_width
-        self.button_height = 40
-        self.button_y_shift = 100
+        self.button_height = self.screen_height /10
+        self.button_y_shift = 200
         self.mouse_x = -1
         self.mouse_y = -1
         self.button_color = (255,255,255)
-        self.button_text_offset = [60, 50, 40, 60, 30]      #hard coded button shifts   #future addition would be to measure the width of text to display and then find center of that text
+        self.button_text_offset = [self.screen_width*3/100, self.screen_width*3/100, self.screen_width*3/100, self.screen_width*3/100, self.screen_width*3/100]
+        # self.button_text_offset = [60, 50, 40, 60, 30]      #hard coded button shifts   #future addition would be to measure the width of text to display and then find center of that text
         
 
         # set button's y start and ends
@@ -150,7 +151,7 @@ class CardGame:
                 pygame.draw.rect(self.screen,self.color_light,[self.button_x_start, self.button_y_start[i],self.button_width,self.button_height]) 
             else:
                 pygame.draw.rect(self.screen,self.color_dark,[self.button_x_start, self.button_y_start[i],self.button_width,self.button_height])
-            self.screen.blit(self.button_text_list[i], (self.button_x_text_pos[i], self.button_y_start[i]))
+            self.screen.blit(self.button_text_list[i], (self.button_x_text_pos[i], self.button_y_start[i] + self.button_height*9/20))
 
         pygame.display.flip()
         pygame.display.update()

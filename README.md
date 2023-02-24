@@ -1,1 +1,2 @@
-# t9hackathon
+## Blackjack Card Counting Trainer (T9 Hackathon)
+
