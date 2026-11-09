@@ -1,29 +1,62 @@
-## Ace Analyzer (T9 Hackathon)
+# Ace Analyzer
 
-## Inspiration
+Ace Analyzer is a Python/Pygame blackjack prototype created for the T9 Hackathon. It provides a graphical table for playing hands against a dealer. Although the original idea was to help people learn card counting, the current game does not track or teach card counting.
 
-The team's goal was to create a program that would teach players how to count cards in Blackjack without risking any real money.
+## What works today
 
-## What it does
+- Starts a round with a player hand and a dealer hand, each dealt two cards from a shuffled two-deck shoe.
+- Shows the dealer's first card and hides the other until the dealer plays.
+- Lets the player hit, stand, and start another round with the on-screen controls.
+- On stand, plays the dealer's hand until it reaches 17, then compares hand values and prints the outcome in the terminal.
 
-This project implements a GUI to allow the user to make decisions for their hand (stay, hit, split, double). The program then compares the player's hand with the dealer's and tells them if they won.
+The hand-value code attempts to score Aces as 1 or 11 and face cards as 10. This is an early prototype, and its scoring and round behavior have known gaps (see [Limitations](#limitations)).
 
-## How we built it
+## Run locally
 
-The trainer is a GUI program built using Python and Pygame.
+You need Python, Pygame, and a desktop environment that can open a Pygame window. Run these commands from the repository root; the game loads its card artwork using a relative path.
 
-## Challenges we ran into
+```bash
+python -m venv .venv
+```
 
-The team faced various challenges while building the trainer, including testing their program and working with multiple live versions.
+Activate the environment:
 
-## Accomplishments that we're proud of
+```bash
+# macOS / Linux
+source .venv/bin/activate
 
-For their first hackathon the team is proud that we were able to learn something new and create a program that shows a solid proof of concept of our goals in under 24 hours!
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+```
 
-## What we learned
+Install Pygame and start the game:
 
-Both team members got more comfortable using Python while learning Pygame to support the GUI.
+```bash
+python -m pip install pygame
+python card_game.py
+```
 
-## What's next for The Dealer's Nightmare
+There is no dependency manifest or automated test suite in the repository; Pygame is the external runtime dependency.
 
-Moving forward, the team plans to finish implementing the remaining blackjack functions and add basic strategy recommendations for the user, along with more advanced card counting functions. The Dealer’s Nightmare is perfect for those interested in learning how to count cards in blackjack and is a great way to practice your skills and see if you have what it takes to beat the dealer at their own game.
+## Controls
+
+| Input | Current behavior |
+| --- | --- |
+| **Hit** | Deal one card to the player's hand. |
+| **Stand** | Play the dealer's hand and print the result to the terminal. |
+| **Continue** | Deal another round. |
+| **S** | Play the dealer's hand, but does not print a round result. |
+| **Q** | Quit. |
+| **Double / Split buttons** | Displayed in the interface but not implemented as playable actions. |
+
+## Technology
+
+- Python
+- Pygame for the desktop interface, drawing, events, and image loading
+- Bitmap assets in `images/` for the table background and playing cards
+
+## Limitations and status
+
+This is a hackathon proof of concept, not a finished blackjack or card-counting trainer. Card counting, strategy recommendations, betting, and in-game instructions are not implemented. Results appear in the terminal rather than in the game window. The Double and Split buttons are placeholders, and the scoring currently treats a Two as 10; deck exhaustion and other blackjack edge cases are also not handled robustly. Use it as an example of an early Pygame project, not as a reliable rules implementation.
+
+Built by a two-member team during their first hackathon, the project was an opportunity to learn Python and Pygame while producing a playable starting point.
